@@ -29,15 +29,18 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        loadingDiv.style.display = 'block';
+        loadingDiv.classList.remove('hidden');
 
         try {
             const apiUrl = `https://rplikers-credit-mahiro.onrender.com/api/react?cookie=${encodeURIComponent(cookie)}&link=${encodeURIComponent(link)}&react=${encodeURIComponent(reaction)}`;
 
-            const response = await fetch(apiUrl);
+            const response = await fetch(apiUrl, {
+                method: 'GET',
+            });
+
             const result = await response.json();
 
-            loadingDiv.style.display = 'none';
+            loadingDiv.classList.add('hidden');
 
             if (result.success) {
                 Swal.fire({
@@ -55,13 +58,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         } catch (error) {
-            loadingDiv.style.display = 'none';
+            loadingDiv.classList.add('hidden');
             Swal.fire({
                 title: 'Error!',
                 text: 'Failed to process your request. Please try again later.',
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
+            console.error('Error:', error);
         }
+    });
+
+    form.addEventListener('reset', () => {
+        loadingDiv.classList.add('hidden');
     });
 });
