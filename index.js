@@ -34,9 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const apiUrl = `https://rplikers-credit-mahiro.onrender.com/api/react?cookie=${encodeURIComponent(cookie)}&link=${encodeURIComponent(link)}&react=${encodeURIComponent(reaction)}`;
 
-            // Use a CORS proxy
-            const corsProxyUrl = 'https://cors-anywhere.herokuapp.com/';
-            const proxyApiUrl = `${corsProxyUrl}${apiUrl}`;
+            // Use a different CORS proxy
+            const corsProxyUrl = 'https://api.allorigins.win/raw?url=';
+            const proxyApiUrl = `${corsProxyUrl}${encodeURIComponent(apiUrl)}`;
 
             const response = await fetch(proxyApiUrl, {
                 method: 'GET',
