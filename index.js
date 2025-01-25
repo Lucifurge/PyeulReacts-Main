@@ -32,15 +32,22 @@ document.addEventListener('DOMContentLoaded', () => {
         loadingDiv.classList.remove('hidden');
 
         try {
-            const apiUrl = `https://rplikers-credit-mahiro.onrender.com/api/react?cookie=${encodeURIComponent(cookie)}&link=${encodeURIComponent(link)}&react=${encodeURIComponent(reaction)}`;
+            const apiUrl = `https://rplikers-credit-mahiro.onrender.com/api/react`;
 
             // Use a different CORS proxy
-            const corsProxyUrl = 'https://api.allorigins.win/raw?url=';
-            const proxyApiUrl = `${corsProxyUrl}${encodeURIComponent(apiUrl)}`;
+            const corsProxyUrl = 'https://thingproxy.freeboard.io/fetch/';
+            const proxyApiUrl = `${corsProxyUrl}${apiUrl}`;
 
             const response = await fetch(proxyApiUrl, {
-                method: 'GET',
-                mode: 'cors'
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    cookie,
+                    link,
+                    react: reaction
+                })
             });
 
             const result = await response.json();
